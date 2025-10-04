@@ -2,91 +2,87 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Библия онлайн</title>
+  <title>Библия (JSON)</title>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; line-height: 1.6; }
-    #controls { margin-bottom: 20px; }
-    #verses { margin-top: 20px; }
-    .verse { margin-bottom: 8px; }
-    .verse sup { color: #666; margin-right: 5px; font-size: 0.8em; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    select { margin: 10px; padding: 5px; }
+    .verse { margin: 5px 0; }
   </style>
 </head>
 <body>
-  <h1>Библия (Синодальный перевод, RST)</h1>
+  <h1>Библия</h1>
 
-  <div id="controls">
-    <label for="bookSelect">Книга:</label>
-    <select id="bookSelect"></select>
+  <label for="book">Выберите книгу:</label>
+  <select id="book"></select>
 
-    <label for="chapterSelect">Глава:</label>
-    <select id="chapterSelect"></select>
-  </div>
+  <label for="chapter">Выберите главу:</label>
+  <select id="chapter"></select>
 
-  <div id="verses"></div>
+  <div id="content"></div>
 
   <script>
-    const API_URL = "https://justbible.ru/api/bible?translation=rst";
-    const bookSelect = document.getElementById("bookSelect");
-    const chapterSelect = document.getElementById("chapterSelect");
-    const versesDiv = document.getElementById("verses");
+    const books = [
+      {name: "Бытие", file: "genesis.json"},
+      {name: "Исход", file: "exodus.json"},
+      {name: "Левит", file: "leviticus.json"}
+      // сюда можно добавить остальные книги
+    ];
 
-    let books = [];
+    const bookSelect = document.getElementById("book");
+    const chapterSelect = document.getElementById("chapter");
+    const content = document.getElementById("content");
 
-    // Загружаем список книг
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(data => {
-        books = data.books;
-        books.forEach(book => {
-          const opt = document.createElement("option");
-          opt.value = book.book_number;
-          opt.textContent = book.book_name;
-          bookSelect.appendChild(opt);
-        });
-        // Автоматически выбираем первую книгу
-        bookSelect.dispatchEvent(new Event("change"));
-      });
+    let currentData = null;
 
-    // Когда выбираем книгу
-    bookSelect.addEventListener("change", () => {
-      const bookId = bookSelect.value;
-      const book = books.find(b => b.book_number == bookId);
-      chapterSelect.innerHTML = "";
-
-      // Заполняем главы
-      for (let i = 1; i <= book.chapters; i++) {
-        const opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = i;
-        chapterSelect.appendChild(opt);
-      }
-      // Загружаем первую главу
-      loadChapter();
+    // Заполняем список книг
+    books.forEach((b, i) => {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = b.name;
+      bookSelect.appendChild(option);
     });
 
-    chapterSelect.addEventListener("change", loadChapter);
+    async function loadBook(index) {
+      const book = books[index];
+      const response = await fetch(book.file);
+      currentData = await response.json();
 
-    function loadChapter() {
-      const bookId = bookSelect.value;
-      const chapter = chapterSelect.value;
-      versesDiv.innerHTML = "Загрузка...";
+      // Заполняем список глав
+      chapterSelect.innerHTML = "";
+      currentData.chapters.forEach(ch => {
+        let option = document.createElement("option");
+        option.value = ch.number;
+        option.textContent = "Глава " + ch.number;
+        chapterSelect.appendChild(option);
+      });
 
-      fetch(`${API_URL}&book=${bookId}&chapter=${chapter}`)
-        .then(res => res.json())
-        .then(data => {
-          versesDiv.innerHTML = "";
-          data.verses.forEach(v => {
-            const p = document.createElement("p");
-            p.classList.add("verse");
-            p.innerHTML = `<sup>${v.verse}</sup> ${v.text}`;
-            versesDiv.appendChild(p);
-          });
-        })
-        .catch(err => {
-          versesDiv.innerHTML = "Ошибка загрузки текста.";
-          console.error(err);
-        });
+      // Показываем первую главу
+      showChapter(currentData.chapters[0].number);
     }
+
+    function showChapter(num) {
+      content.innerHTML = "";
+      let chapter = currentData.chapters.find(ch => ch.number == num);
+      chapter.verses.forEach(v => {
+        let div = document.createElement("div");
+        div.className = "verse";
+        div.textContent = v.num + ". " + v.text;
+        content.appendChild(div);
+      });
+    }
+
+    // Событие смены книги
+    bookSelect.addEventListener("change", (e) => {
+      loadBook(e.target.value);
+    });
+
+    // Событие смены главы
+    chapterSelect.addEventListener("change", (e) => {
+      showChapter(e.target.value);
+    });
+
+    // Загружаем первую книгу по умолчанию
+    loadBook(0);
   </script>
 </body>
 </html>
