@@ -1,88 +1,46 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Библия (JSON)</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    select { margin: 10px; padding: 5px; }
-    .verse { margin: 5px 0; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Онлайн Библия — Новый Завет</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Библия</h1>
+  <header class="site-header">
+    <h1 class="site-title">Новый Завет</h1>
+    <p class="site-sub">Выберите книгу и главу для чтения</p>
+  </header>
 
-  <label for="book">Выберите книгу:</label>
-  <select id="book"></select>
+  <main class="main">
+    <!-- Кнопка для открытия списка книг -->
+    <button class="toggle-btn" id="toggleBooksBtn">Выбрать книгу</button>
 
-  <label for="chapter">Выберите главу:</label>
-  <select id="chapter"></select>
+    <!-- Плитка книг (скрыта по умолчанию) -->
+    <section class="books-section hidden" id="booksSection">
+      <div class="books-grid" id="bookGrid" role="list"></div>
+    </section>
 
-  <div id="content"></div>
+    <!-- Кнопка и плитка для глав (тоже скрыта) -->
+    <div class="chapters-wrapper hidden" id="chaptersWrapper">
+      <button class="toggle-btn" id="toggleChaptersBtn">Выбрать главу</button>
+      <div class="chapters-grid hidden" id="chaptersGrid"></div>
+    </div>
 
-  <script>
-    const books = [
-      {name: "Бытие", file: "genesis.json"},
-      {name: "Исход", file: "exodus.json"},
-      {name: "Левит", file: "leviticus.json"}
-      // сюда можно добавить остальные книги
-    ];
+    <!-- Текст главы -->
+    <section class="reader-section">
+      <div class="current-info">
+        <span id="currentBook">—</span>
+        <span id="currentChapterLabel">Глава —</span>
+      </div>
+      <article id="content" class="content"></article>
+    </section>
+  </main>
 
-    const bookSelect = document.getElementById("book");
-    const chapterSelect = document.getElementById("chapter");
-    const content = document.getElementById("content");
+  <footer class="site-footer">
+    <small>Локальные JSON-файлы должны находиться рядом с этим файлом.</small>
+  </footer>
 
-    let currentData = null;
-
-    // Заполняем список книг
-    books.forEach((b, i) => {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = b.name;
-      bookSelect.appendChild(option);
-    });
-
-    async function loadBook(index) {
-      const book = books[index];
-      const response = await fetch(book.file);
-      currentData = await response.json();
-
-      // Заполняем список глав
-      chapterSelect.innerHTML = "";
-      currentData.chapters.forEach(ch => {
-        let option = document.createElement("option");
-        option.value = ch.number;
-        option.textContent = "Глава " + ch.number;
-        chapterSelect.appendChild(option);
-      });
-
-      // Показываем первую главу
-      showChapter(currentData.chapters[0].number);
-    }
-
-    function showChapter(num) {
-      content.innerHTML = "";
-      let chapter = currentData.chapters.find(ch => ch.number == num);
-      chapter.verses.forEach(v => {
-        let div = document.createElement("div");
-        div.className = "verse";
-        div.textContent = v.num + ". " + v.text;
-        content.appendChild(div);
-      });
-    }
-
-    // Событие смены книги
-    bookSelect.addEventListener("change", (e) => {
-      loadBook(e.target.value);
-    });
-
-    // Событие смены главы
-    chapterSelect.addEventListener("change", (e) => {
-      showChapter(e.target.value);
-    });
-
-    // Загружаем первую книгу по умолчанию
-    loadBook(0);
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>

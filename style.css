@@ -1,16 +1,82 @@
-body {
-  font-family: sans-serif;
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  line-height: 1.6;
+:root{
+  --bg:#ffffff;
+  --muted:#6b7280;
+  --tile-bg:#f6f7f8;
+  --tile-border:#d5d7da;
+  --accent:#0b69d2;
+  --gap:12px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 
-h1 {
-  color: darkblue;
-  text-align: center;
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:#111}
+body{display:flex;flex-direction:column;align-items:center;padding:18px}
+.hidden{display:none}
+
+/* Заголовки */
+.site-header{text-align:center;margin-bottom:20px}
+.site-title{margin:0;font-size:1.6rem}
+.site-sub{margin:4px 0;color:var(--muted)}
+
+/* Кнопки разворота */
+.toggle-btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 16px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:background .2s ease;
+  margin:6px 0 14px;
+}
+.toggle-btn:hover{background:#095cb7}
+
+/* Сетка книг и глав */
+.books-grid, .chapters-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px,1fr));
+  gap:var(--gap);
+  max-width:700px;
+  margin:0 auto 18px;
 }
 
-h2 {
-  color: darkgreen;
+.book-tile, .chapter-tile{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  aspect-ratio:1/1;
+  border:1px solid var(--tile-border);
+  border-radius:10px;
+  background:var(--tile-bg);
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .15s, box-shadow .15s, background .15s;
 }
+.book-tile:hover, .chapter-tile:hover{
+  transform:translateY(-3px);
+  box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+.book-tile.active, .chapter-tile.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:transparent;
+}
+
+/* Блок чтения */
+.reader-section{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:10px;
+  padding:16px;
+  width:100%;
+  max-width:700px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+.current-info{display:flex;gap:8px;margin-bottom:10px;font-weight:600}
+.current-info span:first-child{color:var(--accent)}
+.chapter-title{font-size:1.1rem;margin-bottom:12px}
+.verse{margin:6px 0;line-height:1.6}
+.verse-num{color:var(--muted);font-size:0.8rem;vertical-align:super;margin-right:6px}
+.site-footer{margin-top:20px;color:var(--muted);font-size:0.85rem;text-align:center}
