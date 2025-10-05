@@ -1,46 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Онлайн Библия — Новый Завет</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Библия</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <h1 class="site-title">Новый Завет</h1>
-    <p class="site-sub">Выберите книгу и главу для чтения</p>
+  <header>
+    <h1>Библия</h1>
+    <div class="selectors">
+      <button id="booksBtn">Книги</button>
+      <button id="chaptersBtn" disabled>Главы</button>
+    </div>
   </header>
 
-  <main class="main">
-    <!-- Кнопка для открытия списка книг -->
-    <button class="toggle-btn" id="toggleBooksBtn">Выбрать книгу</button>
-
-    <!-- Плитка книг (скрыта по умолчанию) -->
-    <section class="books-section hidden" id="booksSection">
-      <div class="books-grid" id="bookGrid" role="list"></div>
-    </section>
-
-    <!-- Кнопка и плитка для глав (тоже скрыта) -->
-    <div class="chapters-wrapper hidden" id="chaptersWrapper">
-      <button class="toggle-btn" id="toggleChaptersBtn">Выбрать главу</button>
-      <div class="chapters-grid hidden" id="chaptersGrid"></div>
-    </div>
-
-    <!-- Текст главы -->
-    <section class="reader-section">
-      <div class="current-info">
-        <span id="currentBook">—</span>
-        <span id="currentChapterLabel">Глава —</span>
-      </div>
-      <article id="content" class="content"></article>
-    </section>
+  <main>
+    <div id="booksContainer" class="grid hidden"></div>
+    <div id="chaptersContainer" class="grid hidden"></div>
+    <div id="textContainer" class="text"></div>
   </main>
 
-  <footer class="site-footer">
-    <small>Локальные JSON-файлы должны находиться рядом с этим файлом.</small>
-  </footer>
-
-  <script src="main.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

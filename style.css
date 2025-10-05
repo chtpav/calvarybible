@@ -1,82 +1,94 @@
-:root{
-  --bg:#ffffff;
-  --muted:#6b7280;
-  --tile-bg:#f6f7f8;
-  --tile-border:#d5d7da;
-  --accent:#0b69d2;
-  --gap:12px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+/* Общие настройки */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f8f8f8;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:#111}
-body{display:flex;flex-direction:column;align-items:center;padding:18px}
-.hidden{display:none}
-
-/* Заголовки */
-.site-header{text-align:center;margin-bottom:20px}
-.site-title{margin:0;font-size:1.6rem}
-.site-sub{margin:4px 0;color:var(--muted)}
-
-/* Кнопки разворота */
-.toggle-btn{
-  display:inline-block;
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  padding:10px 16px;
-  font-size:1rem;
-  cursor:pointer;
-  transition:background .2s ease;
-  margin:6px 0 14px;
-}
-.toggle-btn:hover{background:#095cb7}
-
-/* Сетка книг и глав */
-.books-grid, .chapters-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px,1fr));
-  gap:var(--gap);
-  max-width:700px;
-  margin:0 auto 18px;
+/* Верхний баннер */
+header {
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.book-tile, .chapter-tile{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  aspect-ratio:1/1;
-  border:1px solid var(--tile-border);
-  border-radius:10px;
-  background:var(--tile-bg);
-  font-weight:600;
-  cursor:pointer;
-  transition:transform .15s, box-shadow .15s, background .15s;
-}
-.book-tile:hover, .chapter-tile:hover{
-  transform:translateY(-3px);
-  box-shadow:0 5px 10px rgba(0,0,0,0.1);
-}
-.book-tile.active, .chapter-tile.active{
-  background:var(--accent);
-  color:#fff;
-  border-color:transparent;
+header h1 {
+  font-size: 22px;
+  margin: 0;
 }
 
-/* Блок чтения */
-.reader-section{
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:10px;
-  padding:16px;
-  width:100%;
-  max-width:700px;
-  box-shadow:0 3px 12px rgba(0,0,0,0.05);
+.selectors button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  margin-left: 15px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
 }
-.current-info{display:flex;gap:8px;margin-bottom:10px;font-weight:600}
-.current-info span:first-child{color:var(--accent)}
-.chapter-title{font-size:1.1rem;margin-bottom:12px}
-.verse{margin:6px 0;line-height:1.6}
-.verse-num{color:var(--muted);font-size:0.8rem;vertical-align:super;margin-right:6px}
-.site-footer{margin-top:20px;color:var(--muted);font-size:0.85rem;text-align:center}
+
+.selectors button:hover:not(:disabled) {
+  color: #0077cc;
+}
+
+.selectors button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Контейнеры */
+main {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Сетка для книг и глав */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  justify-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.grid div {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.grid div:hover {
+  background-color: #e8f0fe;
+  border-color: #0077cc;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Текст Библии */
+.text {
+  margin-top: 30px;
+  font-size: 18px;
+  line-height: 1.6;
+}
