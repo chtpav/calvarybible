@@ -4,27 +4,34 @@ const booksContainer = document.getElementById("booksContainer");
 const chaptersContainer = document.getElementById("chaptersContainer");
 const textContainer = document.getElementById("textContainer");
 
-// Новый Завет
 const books = [
-  { name: "От Матфея", file: "data/matthew.json", chapters: 28 },
-  { name: "От Марка", file: "data/mark.json", chapters: 16 },
-  { name: "От Луки", file: "data/luke.json", chapters: 24 },
-  { name: "От Иоанна", file: "data/john.json", chapters: 21 },
-  { name: "Деяния Апостолов", file: "data/acts.json", chapters: 28 }
+  { name: "От Матфея", file: "data/matthew.json" },
+  { name: "От Марка", file: "data/mark.json" },
+  { name: "От Луки", file: "data/luke.json" },
+  { name: "От Иоанна", file: "data/john.json" }
 ];
 
 let selectedBook = null;
 let bookData = null;
 
-// События кнопок
+// Загружаем последнюю главу или 1 Ин 1
+window.addEventListener("DOMContentLoaded", async () => {
+  const last = JSON.parse(localStorage.getItem("lastReading")) || {
+    file: "data/john.json",
+    name: "От Иоанна",
+    chapter: 1
+  };
+  await loadBook({ file: last.file, name: last.name });
+  showChapter(last.chapter);
+});
+
 booksBtn.addEventListener("click", () => {
-  toggleVisibility(booksContainer);
+  toggle(booksContainer);
   chaptersContainer.classList.add("hidden");
-  textContainer.textContent = "";
 });
 
 chaptersBtn.addEventListener("click", () => {
-  if (selectedBook) toggleVisibility(chaptersContainer);
+  if (selectedBook) toggle(chaptersContainer);
   booksContainer.classList.add("hidden");
 });
 
@@ -36,12 +43,12 @@ books.forEach(b => {
   booksContainer.appendChild(div);
 });
 
-function selectBook(book) {
+async function selectBook(book) {
   selectedBook = book;
   chaptersContainer.innerHTML = "";
   booksContainer.classList.add("hidden");
   chaptersBtn.disabled = false;
-  loadBook(book);
+  await loadBook(book);
 }
 
 async function loadBook(book) {
@@ -50,26 +57,40 @@ async function loadBook(book) {
     bookData = await res.json();
     generateChapters(book);
   } catch {
-    textContainer.textContent = "Ошибка загрузки текста.";
+    textContainer.textContent = "Ошибка загрузки книги.";
   }
 }
 
 function generateChapters(book) {
-  for (let i = 1; i <= book.chapters; i++) {
+  chaptersContainer.innerHTML = "";
+  const chapterNumbers = Object.keys(bookData);
+  chapterNumbers.forEach(num => {
     const div = document.createElement("div");
-    div.textContent = i;
-    div.addEventListener("click", () => selectChapter(i));
+    div.textContent = num;
+    div.addEventListener("click", () => showChapter(num));
     chaptersContainer.appendChild(div);
-  }
-  chaptersContainer.classList.remove("hidden");
+  });
 }
 
-function selectChapter(chapter) {
-  const text = bookData?.[chapter] || "Глава в процессе добавления.";
-  chaptersContainer.classList.add("hidden");
-  textContainer.innerHTML = `<h2>${selectedBook.name}, глава ${chapter}</h2><p>${text}</p>`;
+function showChapter(chapterNum) {
+  if (!bookData) return;
+  const verses = bookData[chapterNum];
+  let html = `<h2>${selectedBook?.name || "От Иоанна"}, глава ${chapterNum}</h2>`;
+  verses.forEach(v => {
+    html += `<p><strong>${v.num}</strong> ${v.text}</p>`;
+  });
+  textContainer.innerHTML = html;
+
+  localStorage.setItem(
+    "lastReading",
+    JSON.stringify({
+      file: selectedBook?.file || "data/john.json",
+      name: selectedBook?.name || "От Иоанна",
+      chapter: chapterNum
+    })
+  );
 }
 
-function toggleVisibility(el) {
+function toggle(el) {
   el.classList.toggle("hidden");
 }
