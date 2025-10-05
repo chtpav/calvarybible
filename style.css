@@ -1,8 +1,8 @@
-/* Общие настройки */
+/* Общий стиль */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background-color: #f8f8f8;
+  background-color: #f7f7f7;
   color: #222;
   display: flex;
   flex-direction: column;
@@ -12,37 +12,48 @@ body {
 /* Верхний баннер */
 header {
   width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background: linear-gradient(135deg, #fafafa 0%, #eaeaea 100%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 10;
+}
+
+.header-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
   font-size: 22px;
+  color: #2d2d2d;
   margin: 0;
+  font-weight: 600;
 }
 
-.selectors button {
-  background: none;
-  border: none;
-  font-size: 16px;
-  margin-left: 15px;
+/* Кнопки в баннере */
+nav button {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 15px;
   cursor: pointer;
-  color: #333;
-  transition: color 0.3s ease;
+  margin-left: 10px;
+  transition: all 0.3s ease;
 }
 
-.selectors button:hover:not(:disabled) {
-  color: #0077cc;
+nav button:hover:not(:disabled) {
+  background-color: #0077cc;
+  color: #fff;
+  border-color: #0077cc;
 }
 
-.selectors button:disabled {
+nav button:disabled {
   opacity: 0.5;
   cursor: default;
 }
@@ -55,13 +66,13 @@ main {
   padding: 20px;
 }
 
-/* Сетка для книг и глав */
+/* Сетка книг/глав */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  justify-items: center;
-  gap: 10px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, 100px);
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
 }
 
 .grid div {
@@ -69,16 +80,18 @@ main {
   height: 100px;
   background-color: #fff;
   border: 1px solid #ddd;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 14px;
 }
 
 .grid div:hover {
-  background-color: #e8f0fe;
+  background-color: #e7f0ff;
   border-color: #0077cc;
 }
 
@@ -86,9 +99,14 @@ main {
   display: none;
 }
 
-/* Текст Библии */
+/* Текст */
 .text {
   margin-top: 30px;
   font-size: 18px;
   line-height: 1.6;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #ddd;
 }

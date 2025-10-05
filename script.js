@@ -4,56 +4,70 @@ const booksContainer = document.getElementById("booksContainer");
 const chaptersContainer = document.getElementById("chaptersContainer");
 const textContainer = document.getElementById("textContainer");
 
-// Пример данных
-const books = ["Бытие", "Исход", "Левит", "Числа", "Второзаконие"];
-const chapters = {
-  "Бытие": 50,
-  "Исход": 40,
-  "Левит": 27,
-  "Числа": 36,
-  "Второзаконие": 34
-};
+// Новый Завет
+const books = [
+  { name: "От Матфея", file: "data/matthew.json", chapters: 28 },
+  { name: "От Марка", file: "data/mark.json", chapters: 16 },
+  { name: "От Луки", file: "data/luke.json", chapters: 24 },
+  { name: "От Иоанна", file: "data/john.json", chapters: 21 },
+  { name: "Деяния Апостолов", file: "data/acts.json", chapters: 28 }
+];
 
-// Кнопки вверху
+let selectedBook = null;
+let bookData = null;
+
+// События кнопок
 booksBtn.addEventListener("click", () => {
   toggleVisibility(booksContainer);
   chaptersContainer.classList.add("hidden");
+  textContainer.textContent = "";
 });
 
 chaptersBtn.addEventListener("click", () => {
-  toggleVisibility(chaptersContainer);
+  if (selectedBook) toggleVisibility(chaptersContainer);
   booksContainer.classList.add("hidden");
 });
 
-// Генерация книг
-books.forEach(book => {
+// Показ книг
+books.forEach(b => {
   const div = document.createElement("div");
-  div.textContent = book;
-  div.addEventListener("click", () => selectBook(book));
+  div.textContent = b.name;
+  div.addEventListener("click", () => selectBook(b));
   booksContainer.appendChild(div);
 });
 
 function selectBook(book) {
-  textContainer.textContent = "";
+  selectedBook = book;
   chaptersContainer.innerHTML = "";
   booksContainer.classList.add("hidden");
   chaptersBtn.disabled = false;
-  generateChapters(book);
-  chaptersContainer.classList.remove("hidden");
+  loadBook(book);
 }
 
-function generateChapters(book) {
-  for (let i = 1; i <= chapters[book]; i++) {
-    const div = document.createElement("div");
-    div.textContent = i;
-    div.addEventListener("click", () => selectChapter(book, i));
-    chaptersContainer.appendChild(div);
+async function loadBook(book) {
+  try {
+    const res = await fetch(book.file);
+    bookData = await res.json();
+    generateChapters(book);
+  } catch {
+    textContainer.textContent = "Ошибка загрузки текста.";
   }
 }
 
-function selectChapter(book, chapter) {
+function generateChapters(book) {
+  for (let i = 1; i <= book.chapters; i++) {
+    const div = document.createElement("div");
+    div.textContent = i;
+    div.addEventListener("click", () => selectChapter(i));
+    chaptersContainer.appendChild(div);
+  }
+  chaptersContainer.classList.remove("hidden");
+}
+
+function selectChapter(chapter) {
+  const text = bookData?.[chapter] || "Глава в процессе добавления.";
   chaptersContainer.classList.add("hidden");
-  textContainer.textContent = `Текст ${book}, глава ${chapter}. Здесь будет текст Библии.`;
+  textContainer.innerHTML = `<h2>${selectedBook.name}, глава ${chapter}</h2><p>${text}</p>`;
 }
 
 function toggleVisibility(el) {
