@@ -6,6 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden; /* <— убираем горизонтальную прокрутку */
 }
 
 /* Верхний баннер */
@@ -63,20 +64,23 @@ main {
   max-width: 900px;
   text-align: center;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Сетка */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px);
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   justify-content: center;
   gap: 15px;
   margin-top: 30px;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .grid div {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -86,6 +90,8 @@ main {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .grid div:hover {
@@ -107,4 +113,32 @@ main {
   border-radius: 12px;
   padding: 20px;
   border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+/* 📱 Адаптивность */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 18px;
+  }
+
+  nav button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 10px;
+  }
+
+  .grid div {
+    width: 70px;
+    height: 70px;
+    font-size: 13px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
 }

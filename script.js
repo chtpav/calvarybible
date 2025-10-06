@@ -14,15 +14,17 @@ const books = [
 let selectedBook = null;
 let bookData = null;
 
-// Загружаем последнюю главу или 1 Ин 1
+// Загружаем последнюю книгу и главу
 window.addEventListener("DOMContentLoaded", async () => {
-  const last = JSON.parse(localStorage.getItem("lastReading")) || {
-    file: "data/john.json",
-    name: "От Иоанна",
-    chapter: 1
-  };
-  await loadBook({ file: last.file, name: last.name });
-  showChapter(last.chapter);
+  const last = JSON.parse(localStorage.getItem("lastReading"));
+  if (last) {
+    const book = books.find(b => b.file === last.file) || books[3];
+    await selectBook(book, false);
+    showChapter(last.chapter);
+  } else {
+    await selectBook(books[3], false);
+    showChapter(1);
+  }
 });
 
 booksBtn.addEventListener("click", () => {
@@ -43,12 +45,16 @@ books.forEach(b => {
   booksContainer.appendChild(div);
 });
 
-async function selectBook(book) {
+async function selectBook(book, userClick = true) {
   selectedBook = book;
   chaptersContainer.innerHTML = "";
-  booksContainer.classList.add("hidden");
-  chaptersBtn.disabled = false;
   await loadBook(book);
+  chaptersBtn.disabled = false;
+
+  if (userClick) {
+    booksContainer.classList.add("hidden");
+    chaptersContainer.classList.remove("hidden");
+  }
 }
 
 async function loadBook(book) {
@@ -67,7 +73,10 @@ function generateChapters(book) {
   chapterNumbers.forEach(num => {
     const div = document.createElement("div");
     div.textContent = num;
-    div.addEventListener("click", () => showChapter(num));
+    div.addEventListener("click", () => {
+      showChapter(num);
+      chaptersContainer.classList.add("hidden"); // скрываем главы после выбора
+    });
     chaptersContainer.appendChild(div);
   });
 }
@@ -81,6 +90,7 @@ function showChapter(chapterNum) {
   });
   textContainer.innerHTML = html;
 
+  // Сохраняем последнюю книгу и главу
   localStorage.setItem(
     "lastReading",
     JSON.stringify({
