@@ -85,7 +85,7 @@ function generateChapters() {
 function showChapter(chapterNum) {
   if (!bookData) return;
   const verses = bookData[chapterNum];
-  let html = `<h2>${selectedBook?.name || "Иоанна"}, глава ${chapterNum}</h2>`;
+  let html = `<h2>${selectedBook?.name || "Иоанна"}, ${chapterNum}</h2>`;
   verses.forEach(v => {
     html += `<p><strong>${v.num}</strong> ${v.text}</p>`;
   });
