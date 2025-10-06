@@ -6,10 +6,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden; /* <— убираем горизонтальную прокрутку */
+  overflow-x: hidden;
 }
 
-/* Верхний баннер */
+* {
+  box-sizing: border-box;
+}
+
 header {
   width: 100%;
   background: linear-gradient(135deg, #fafafa 0%, #e9e9e9 100%);
@@ -28,6 +31,19 @@ header {
   align-items: center;
 }
 
+.header-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex: 1;
+}
+
 header h1 {
   font-size: 22px;
   color: #2d2d2d;
@@ -35,7 +51,24 @@ header h1 {
   font-weight: 600;
 }
 
-/* Кнопки */
+.arrow {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #222;
+  padding: 0 5px;
+}
+
+.arrow:focus {
+  outline: none;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+}
+
 nav button {
   background: #fff;
   border: 1px solid #ccc;
@@ -43,14 +76,19 @@ nav button {
   padding: 8px 14px;
   font-size: 15px;
   cursor: pointer;
-  margin-left: 10px;
-  transition: all 0.3s ease;
+  transition: none;
+  outline: none;
+  box-shadow: none;
 }
 
-nav button:hover:not(:disabled) {
-  background-color: #0077cc;
-  color: #fff;
-  border-color: #0077cc;
+nav button:hover,
+nav button:focus,
+nav button:active {
+  background: #fff;
+  color: #222;
+  border-color: #ccc;
+  outline: none;
+  box-shadow: none;
 }
 
 nav button:disabled {
@@ -58,7 +96,6 @@ nav button:disabled {
   cursor: default;
 }
 
-/* Контент */
 main {
   width: 100%;
   max-width: 900px;
@@ -67,7 +104,6 @@ main {
   box-sizing: border-box;
 }
 
-/* Сетка */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 100px);
@@ -79,7 +115,6 @@ main {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  box-sizing: border-box;
 }
 
 .grid div {
@@ -92,22 +127,15 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: none;
   font-size: 14px;
   text-align: center;
-  box-sizing: border-box;
-}
-
-.grid div:hover {
-  background-color: #e7f0ff;
-  border-color: #0077cc;
 }
 
 .hidden {
   display: none;
 }
 
-/* Текст */
 .text {
   margin-top: 30px;
   font-size: 18px;
@@ -120,7 +148,6 @@ main {
   box-sizing: border-box;
 }
 
-/* 📱 Адаптивность */
 @media (max-width: 600px) {
   header h1 {
     font-size: 18px;

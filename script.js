@@ -4,17 +4,19 @@ const booksContainer = document.getElementById("booksContainer");
 const chaptersContainer = document.getElementById("chaptersContainer");
 const textContainer = document.getElementById("textContainer");
 
+const prevChapterBtn = document.getElementById("prevChapter");
+const nextChapterBtn = document.getElementById("nextChapter");
+
 const books = [
-  { name: "От Матфея", file: "data/matthew.json" },
-  { name: "От Марка", file: "data/mark.json" },
-  { name: "От Луки", file: "data/luke.json" },
-  { name: "От Иоанна", file: "data/john.json" }
+  { name: "Матфея", file: "data/matthew.json" },
+  { name: "Марка", file: "data/mark.json" },
+  { name: "Луки", file: "data/luke.json" },
+  { name: "Иоанна", file: "data/john.json" }
 ];
 
 let selectedBook = null;
 let bookData = null;
 
-// Загружаем последнюю книгу и главу
 window.addEventListener("DOMContentLoaded", async () => {
   const last = JSON.parse(localStorage.getItem("lastReading"));
   if (last) {
@@ -37,7 +39,6 @@ chaptersBtn.addEventListener("click", () => {
   booksContainer.classList.add("hidden");
 });
 
-// Показ книг
 books.forEach(b => {
   const div = document.createElement("div");
   div.textContent = b.name;
@@ -61,13 +62,13 @@ async function loadBook(book) {
   try {
     const res = await fetch(book.file);
     bookData = await res.json();
-    generateChapters(book);
+    generateChapters();
   } catch {
     textContainer.textContent = "Ошибка загрузки книги.";
   }
 }
 
-function generateChapters(book) {
+function generateChapters() {
   chaptersContainer.innerHTML = "";
   const chapterNumbers = Object.keys(bookData);
   chapterNumbers.forEach(num => {
@@ -75,7 +76,7 @@ function generateChapters(book) {
     div.textContent = num;
     div.addEventListener("click", () => {
       showChapter(num);
-      chaptersContainer.classList.add("hidden"); // скрываем главы после выбора
+      chaptersContainer.classList.add("hidden");
     });
     chaptersContainer.appendChild(div);
   });
@@ -84,21 +85,50 @@ function generateChapters(book) {
 function showChapter(chapterNum) {
   if (!bookData) return;
   const verses = bookData[chapterNum];
-  let html = `<h2>${selectedBook?.name || "От Иоанна"}, глава ${chapterNum}</h2>`;
+  let html = `<h2>${selectedBook?.name || "Иоанна"}, глава ${chapterNum}</h2>`;
   verses.forEach(v => {
     html += `<p><strong>${v.num}</strong> ${v.text}</p>`;
   });
   textContainer.innerHTML = html;
 
-  // Сохраняем последнюю книгу и главу
   localStorage.setItem(
     "lastReading",
     JSON.stringify({
       file: selectedBook?.file || "data/john.json",
-      name: selectedBook?.name || "От Иоанна",
+      name: selectedBook?.name || "Иоанна",
       chapter: chapterNum
     })
   );
+}
+
+prevChapterBtn.addEventListener("click", () => changeChapter(-1));
+nextChapterBtn.addEventListener("click", () => changeChapter(1));
+
+function changeChapter(direction) {
+  if (!selectedBook || !bookData) return;
+  const chapters = Object.keys(bookData).map(n => parseInt(n)).sort((a,b)=>a-b);
+  let currentChapter = parseInt(JSON.parse(localStorage.getItem("lastReading"))?.chapter || 1);
+  let bookIndex = books.indexOf(selectedBook);
+
+  let chapterIndex = chapters.indexOf(currentChapter) + direction;
+
+  if (chapterIndex < 0) {
+    bookIndex = (bookIndex - 1 + books.length) % books.length;
+    selectedBook = books[bookIndex];
+    loadBook(selectedBook).then(() => {
+      const newChapters = Object.keys(bookData).map(n=>parseInt(n)).sort((a,b)=>a-b);
+      showChapter(newChapters[newChapters.length-1]);
+    });
+  } else if (chapterIndex >= chapters.length) {
+    bookIndex = (bookIndex + 1) % books.length;
+    selectedBook = books[bookIndex];
+    loadBook(selectedBook).then(() => {
+      const newChapters = Object.keys(bookData).map(n=>parseInt(n)).sort((a,b)=>a-b);
+      showChapter(newChapters[0]);
+    });
+  } else {
+    showChapter(chapters[chapterIndex]);
+  }
 }
 
 function toggle(el) {
