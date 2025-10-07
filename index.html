@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calvary Bible</title>
-  <meta name="description" content="Calvary Bible — онлайн Библия. Читайте книги и главы на любом устройстве.">
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"> <!-- указываем кодировку страницы -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- делаем страницу адаптивной для мобильных -->
+  <title>Calvary Bible</title> <!-- название вкладки в браузере -->
+  <meta name="description" content="Calvary Bible — онлайн Библия. Читайте книги и главы на любом устройстве."> <!-- описание сайта для поисковиков -->
+  <link rel="icon" href="favicon.png" type="image/png"> <!-- значок сайта в вкладке -->
+  <link rel="stylesheet" href="style.css"> <!-- подключаем файл стилей -->
 </head>
 <body>
-  <header>
-    <div class="header-content">
-      <h1>
-        <img src="favicon.png" alt="Calvary Bible" class="header-icon">
-        Calvary Bible
+  <header> <!-- шапка сайта -->
+    <div class="header-content"> <!-- контейнер для содержимого шапки -->
+      <h1> <!-- заголовок сайта -->
+        <img src="favicon.png" alt="Calvary Bible" class="header-icon"> <!-- иконка рядом с названием -->
+        Calvary Bible <!-- текст заголовка -->
       </h1>
-      <div class="header-center">
-        <span id="prevChapter" class="arrow">&lt;</span>
-        <span id="nextChapter" class="arrow">&gt;</span>
+      <div class="header-center"> <!-- контейнер для стрелок навигации -->
+        <span id="prevChapter" class="arrow">&lt;</span> <!-- кнопка для предыдущей главы -->
+        <span id="nextChapter" class="arrow">&gt;</span> <!-- кнопка для следующей главы -->
       </div>
-      <nav>
-        <button id="booksBtn">Книги</button>
-        <button id="chaptersBtn" disabled>Главы</button>
+      <nav> <!-- навигация -->
+        <button id="booksBtn">Книги</button> <!-- кнопка для показа списка книг -->
+        <button id="chaptersBtn" disabled>Главы</button> <!-- кнопка для показа глав, по умолчанию отключена -->
       </nav>
     </div>
   </header>
-  <main>
-    <div id="booksContainer" class="grid hidden"></div>
-    <div id="chaptersContainer" class="grid hidden"></div>
-    <div id="textContainer" class="text"></div>
+  <main> <!-- основное содержимое страницы -->
+    <div id="booksContainer" class="grid hidden"></div> <!-- контейнер для книг, изначально скрыт -->
+    <div id="chaptersContainer" class="grid hidden"></div> <!-- контейнер для глав, изначально скрыт -->
+    <div id="textContainer" class="text"></div> <!-- контейнер для текста выбранной главы -->
   </main>
-  <script src="script.js"></script>
+  <script src="script.js"></script> <!-- подключаем файл с логикой сайта -->
 </body>
 </html>
