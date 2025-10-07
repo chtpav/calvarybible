@@ -7,6 +7,8 @@ body {
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
+  -webkit-user-select: text; /* текст можно выделять */
+  user-select: text;
 }
 
 header {
@@ -47,6 +49,7 @@ header h1 {
   cursor: pointer;
   font-size: 18px;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 nav button {
@@ -60,6 +63,7 @@ nav button {
   transition: none;
   outline: none;
   box-shadow: none;
+  -webkit-tap-highlight-color: transparent; /* убираем подсветку на мобильных */
 }
 
 nav button:hover,
@@ -115,6 +119,7 @@ main {
   box-sizing: border-box;
   outline: none;
   box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .grid div:hover,
@@ -140,6 +145,8 @@ main {
   padding: 20px;
   border: 1px solid #ddd;
   box-sizing: border-box;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 @media (max-width: 600px) {

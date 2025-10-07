@@ -18,18 +18,24 @@ let selectedBook = null;
 let bookData = null;
 let currentChapter = 1;
 
+// Инициализация последнего прочитанного
 window.addEventListener("DOMContentLoaded", async () => {
   const last = JSON.parse(localStorage.getItem("lastReading"));
   if (last) {
     const book = books.find(b => b.file === last.file) || books[3];
     await selectBook(book, false);
-    showChapter(last.chapter);
+    if (bookData[last.chapter]) {
+      showChapter(last.chapter);
+    } else {
+      showChapter(1);
+    }
   } else {
     await selectBook(books[3], false);
     showChapter(1);
   }
 });
 
+// Кнопки открытия списков
 booksBtn.addEventListener("click", () => {
   toggle(booksContainer);
   chaptersContainer.classList.add("hidden");
@@ -40,6 +46,7 @@ chaptersBtn.addEventListener("click", () => {
   booksContainer.classList.add("hidden");
 });
 
+// Генерация списка книг
 books.forEach(b => {
   const div = document.createElement("div");
   div.textContent = b.name;
@@ -47,29 +54,36 @@ books.forEach(b => {
   booksContainer.appendChild(div);
 });
 
+// Выбор книги
 async function selectBook(book, userClick = true) {
   selectedBook = book;
   chaptersContainer.innerHTML = "";
-  await loadBook(book);
-  chaptersBtn.disabled = false;
+  const loaded = await loadBook(book);
+  if (!loaded) return;
 
+  chaptersBtn.disabled = false;
   if (userClick) {
     booksContainer.classList.add("hidden");
     chaptersContainer.classList.remove("hidden");
   }
 }
 
+// Загрузка книги
 async function loadBook(book) {
   try {
     const res = await fetch(book.file);
     bookData = await res.json();
-    generateChapters(book);
-  } catch {
+    generateChapters();
+    return true;
+  } catch (e) {
+    console.error("Ошибка загрузки книги:", e);
     textContainer.textContent = "Ошибка загрузки книги.";
+    return false;
   }
 }
 
-function generateChapters(book) {
+// Генерация глав
+function generateChapters() {
   chaptersContainer.innerHTML = "";
   const chapterNumbers = Object.keys(bookData);
   chapterNumbers.forEach(num => {
@@ -83,8 +97,10 @@ function generateChapters(book) {
   });
 }
 
+// Отображение главы
 function showChapter(chapterNum) {
-  if (!bookData) return;
+  if (!bookData || !bookData[chapterNum]) return;
+
   currentChapter = chapterNum;
   const verses = bookData[chapterNum];
   let html = `<h2>${selectedBook?.name || "Иоанна"}, ${chapterNum}</h2>`;
@@ -110,29 +126,26 @@ nextChapter.addEventListener("click", () => changeChapter(1));
 async function changeChapter(dir) {
   if (!selectedBook || !bookData) return;
 
-  // Получаем все главы текущей книги
-  let chapters = Object.keys(bookData).map(n => parseInt(n)).sort((a,b)=>a-b);
-  let idx = chapters.indexOf(currentChapter);
-  idx += dir;
-
+  let chapters = Object.keys(bookData).map(n => parseInt(n)).sort((a, b) => a - b);
+  let idx = chapters.indexOf(currentChapter) + dir;
   let bookIndex = books.findIndex(b => b.file === selectedBook.file);
 
-  // Переключение между книгами
   if (idx < 0) {
     bookIndex = (bookIndex - 1 + books.length) % books.length;
     await selectBook(books[bookIndex], false);
-    chapters = Object.keys(bookData).map(n=>parseInt(n)).sort((a,b)=>a-b);
-    showChapter(chapters[chapters.length-1]);
+    chapters = Object.keys(bookData).map(n => parseInt(n)).sort((a, b) => a - b);
+    showChapter(chapters[chapters.length - 1]);
   } else if (idx >= chapters.length) {
     bookIndex = (bookIndex + 1) % books.length;
     await selectBook(books[bookIndex], false);
-    chapters = Object.keys(bookData).map(n=>parseInt(n)).sort((a,b)=>a-b);
+    chapters = Object.keys(bookData).map(n => parseInt(n)).sort((a, b) => a - b);
     showChapter(chapters[0]);
   } else {
     showChapter(chapters[idx]);
   }
 }
 
+// Скрыть/показать элементы
 function toggle(el) {
   el.classList.toggle("hidden");
 }
