@@ -1,3 +1,7 @@
+/* Убирает подсветку при касании на мобильных */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
