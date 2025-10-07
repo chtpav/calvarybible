@@ -3,27 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Чтение Библии онлайн. Читай библейские комментарии прямо на сайте Calvary Bible.">
   <title>Calvary Bible</title>
-  
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.png" type="image/png">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="header-content">
-      <h1>🕊️ Calvary Bible</h1>
-      <div class="header-center">
-        <span id="prevChapter" class="arrow">&lt;</span>
-        <span id="nextChapter" class="arrow">&gt;</span>
-      </div>
-      <nav>
-        <button id="booksBtn">Книги</button>
-        <button id="chaptersBtn" disabled>Главы</button>
-      </nav>
+  <div class="header-content">
+    <h1>
+      <img src="favicon.png" alt="Calvary Bible" class="header-icon">
+      Calvary Bible
+    </h1>
+    <div class="header-center">
+      <span id="prevChapter" class="arrow">&lt;</span>
+      <span id="nextChapter" class="arrow">&gt;</span>
     </div>
-  </header>
+    <nav>
+      <button id="booksBtn">Книги</button>
+      <button id="chaptersBtn" disabled>Главы</button>
+    </nav>
+  </div>
+</header>
+
 
   <main>
     <div id="booksContainer" class="grid hidden"></div>

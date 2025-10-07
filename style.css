@@ -37,6 +37,13 @@ header h1 {
   font-weight: 600;
 }
 
+.header-icon {
+  width: 24px;        /* размер иконки */
+  height: 24px;
+  vertical-align: middle; /* выравнивание по центру текста */
+  margin-right: 8px;       /* отступ справа */
+}
+
 .header-center {
   position: absolute;
   left: 50%;
