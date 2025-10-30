@@ -101,29 +101,30 @@ main {
 
 .grid {
   display: grid; /* создаем сетку */
-  grid-template-columns: repeat(auto-fit, 100px); /* колонки 100px и подгонка по ширине */
-  justify-content: center; /* центрируем сетку */
-  justify-items: center; /* центрируем элементы */
+  grid-template-columns: repeat(auto-fit, 100px); /* колонки по 100px */
+  justify-content: center; /* центрируем всю сетку по горизонтали */
+  justify-items: center; /* выравниваем плитки внутри */
   gap: 15px; /* расстояние между элементами */
   margin-top: 30px; /* отступ сверху */
-  max-width: 600px; /* максимальная ширина */
+  width: 100%; /* растягиваем по ширине */
+  max-width: 900px; /* делаем ту же ширину, что и у текста */
 }
 
 .grid div {
-  width: 90px; /* ширина элемента */
-  height: 90px; /* высота элемента */
+  width: 90px; /* ширина плитки */
+  height: 90px; /* высота плитки */
   background-color: #fff; /* фон */
   border: 1px solid #ddd; /* рамка */
   border-radius: 12px; /* скругление углов */
-  display: flex; /* flex для текста внутри */
-  justify-content: center; /* центрируем текст по горизонтали */
-  align-items: center; /* центрируем текст по вертикали */
+  display: flex; /* flex для текста */
+  justify-content: center; /* по горизонтали */
+  align-items: center; /* по вертикали */
   cursor: pointer; /* курсор */
   font-size: 14px; /* размер текста */
   text-align: center; /* выравнивание текста */
-  outline: none; /* убираем обводку */
-  box-shadow: none; /* убираем тень */
-  -webkit-tap-highlight-color: transparent; /* убираем подсветку на мобилках */
+  outline: none; /* без обводки */
+  box-shadow: none; /* без тени */
+  -webkit-tap-highlight-color: transparent; /* без подсветки на мобилках */
 }
 
 .grid div:hover,
@@ -131,8 +132,8 @@ main {
 .grid div:active {
   background-color: #fff; /* фон не меняется */
   border-color: #ddd; /* рамка не меняется */
-  outline: none; /* обводка нет */
-  box-shadow: none; /* тень нет */
+  outline: none; /* без обводки */
+  box-shadow: none; /* без тени */
 }
 
 .hidden {
@@ -161,15 +162,18 @@ main {
     font-size: 13px; /* уменьшаем текст */
   }
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); /* сетка адаптируется к ширине экрана */
-    gap: 10px; /* расстояние между элементами меньше */
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* авто подгонка ширины */
+    justify-content: center; /* центрируем плитки */
+    gap: 10px; /* меньше расстояние между плитками */
+    width: 100%; /* вся ширина экрана */
+    max-width: 900px; /* сохраняем баланс с текстом */
   }
   .grid div {
-    width: 70px; /* уменьшаем элементы */
-    height: 70px; /* уменьшаем элементы */
-    font-size: 13px; /* уменьшаем текст */
+    width: 70px; /* меньше плитка */
+    height: 70px; /* меньше плитка */
+    font-size: 13px; /* меньше текст */
   }
   .text {
-    font-size: 16px; /* уменьшаем текст */
+    font-size: 16px; /* чуть меньше текст */
   }
 }
