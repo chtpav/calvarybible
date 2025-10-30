@@ -4,7 +4,7 @@
 
 body {
   margin: 0; /* убираем отступы браузера */
-  font-family: "Segoe UI", sans-serif; /* шрифт текста */
+  font-family: "segoe ui", sans-serif; /* шрифт текста */
   background-color: #f6f6f6; /* цвет фона страницы */
   color: #222; /* цвет текста */
   display: flex; /* делаем flex-контейнер для выравнивания */
@@ -101,30 +101,29 @@ main {
 
 .grid {
   display: grid; /* создаем сетку */
-  grid-template-columns: repeat(auto-fit, 100px); /* колонки по 100px */
-  justify-content: center; /* центрируем всю сетку по горизонтали */
-  justify-items: center; /* выравниваем плитки внутри */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* сетка с адаптацией */
+  justify-content: center; /* центрируем сетку по горизонтали */
+  justify-items: center; /* центрируем элементы */
   gap: 15px; /* расстояние между элементами */
   margin-top: 30px; /* отступ сверху */
-  width: 100%; /* растягиваем по ширине */
-  max-width: 900px; /* делаем ту же ширину, что и у текста */
+  max-width: 100%; /* сетка не выходит за пределы поля текста */
 }
 
 .grid div {
-  width: 90px; /* ширина плитки */
-  height: 90px; /* высота плитки */
+  width: 100px; /* ширина элемента */
+  height: 100px; /* высота элемента */
   background-color: #fff; /* фон */
   border: 1px solid #ddd; /* рамка */
   border-radius: 12px; /* скругление углов */
-  display: flex; /* flex для текста */
-  justify-content: center; /* по горизонтали */
-  align-items: center; /* по вертикали */
+  display: flex; /* flex для текста внутри */
+  justify-content: center; /* центрируем текст по горизонтали */
+  align-items: center; /* центрируем текст по вертикали */
   cursor: pointer; /* курсор */
   font-size: 14px; /* размер текста */
   text-align: center; /* выравнивание текста */
-  outline: none; /* без обводки */
-  box-shadow: none; /* без тени */
-  -webkit-tap-highlight-color: transparent; /* без подсветки на мобилках */
+  outline: none; /* убираем обводку */
+  box-shadow: none; /* убираем тень */
+  -webkit-tap-highlight-color: transparent; /* убираем подсветку на мобилках */
 }
 
 .grid div:hover,
@@ -132,8 +131,8 @@ main {
 .grid div:active {
   background-color: #fff; /* фон не меняется */
   border-color: #ddd; /* рамка не меняется */
-  outline: none; /* без обводки */
-  box-shadow: none; /* без тени */
+  outline: none; /* обводка нет */
+  box-shadow: none; /* тень нет */
 }
 
 .hidden {
@@ -162,18 +161,17 @@ main {
     font-size: 13px; /* уменьшаем текст */
   }
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* авто подгонка ширины */
-    justify-content: center; /* центрируем плитки */
-    gap: 10px; /* меньше расстояние между плитками */
-    width: 100%; /* вся ширина экрана */
-    max-width: 900px; /* сохраняем баланс с текстом */
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* адаптация под экран телефона */
+    justify-content: center; /* плитки по центру */
+    max-width: 100%; /* плитки занимают всю ширину текстового поля */
+    gap: 12px; /* немного меньшее расстояние */
   }
   .grid div {
-    width: 70px; /* меньше плитка */
-    height: 70px; /* меньше плитка */
-    font-size: 13px; /* меньше текст */
+    width: 80px; /* ширина плитки на телефоне */
+    height: 80px; /* высота плитки */
+    font-size: 13px; /* размер текста в плитке */
   }
   .text {
-    font-size: 16px; /* чуть меньше текст */
+    font-size: 16px; /* уменьшаем текст */
   }
 }

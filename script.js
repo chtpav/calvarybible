@@ -13,7 +13,11 @@ const books = [
   { name: "Марка", file: "data/mark.json" },
   { name: "Луки", file: "data/luke.json" },
   { name: "Иоанна", file: "data/john.json" },
- { name: "Иоанна", file: "data/john.json" }
+  { name: "Иоанна", file: "data/john.json" },
+  { name: "Иоанна", file: "data/john.json" },
+  { name: "Иоанна", file: "data/john.json" },
+  { name: "Иоанна", file: "data/john.json" },
+  
 ];
 
 let selectedBook = null; // выбранная книга
