@@ -13,13 +13,13 @@ const books = [
   { name: "Марка", file: "data/mark.json" },
   { name: "Луки", file: "data/luke.json" },
   { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
-  { name: "Иоанна", file: "data/john.json" },
+  { name: "2", file: "data/john.json" },
+  { name: "3", file: "data/john.json" },
+  { name: "4", file: "data/john.json" },
+  { name: "5", file: "data/john.json" },
+  { name: "6", file: "data/john.json" },
+  { name: "7", file: "data/john.json" },
+  { name: "8", file: "data/john.json" },
   
 ];
 
