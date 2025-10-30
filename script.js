@@ -17,6 +17,9 @@ const books = [
   { name: "Иоанна", file: "data/john.json" },
   { name: "Иоанна", file: "data/john.json" },
   { name: "Иоанна", file: "data/john.json" },
+  { name: "Иоанна", file: "data/john.json" },
+  { name: "Иоанна", file: "data/john.json" },
+  { name: "Иоанна", file: "data/john.json" },
   
 ];
 

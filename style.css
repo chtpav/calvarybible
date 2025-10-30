@@ -8,7 +8,7 @@ body {
   background-color: #f6f6f6; /* цвет фона страницы */
   color: #222; /* цвет текста */
   display: flex; /* делаем flex-контейнер для выравнивания */
-  flex-direction: column; /* элементы сверху вниз */
+  flex-direction: column; /* элементы располагаются сверху вниз */
   align-items: center; /* по центру по горизонтали */
   overflow-x: hidden; /* скрываем горизонтальный скролл */
   -webkit-user-select: text; /* текст можно выделять на мобилках */
@@ -17,25 +17,25 @@ body {
 
 header { 
   width: 100%; /* шапка на всю ширину */
-  background: linear-gradient(135deg, #fafafa 0%, #e9e9e9 100%); /* градиент */
+  background: linear-gradient(135deg, #fafafa 0%, #e9e9e9 100%); /* градиент фона */
   box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* тень снизу */
-  position: sticky; /* фиксируем шапку */
+  position: sticky; /* шапка фиксируется при скролле */
   top: 0; /* сверху */
-  z-index: 10; /* выше всего */
+  z-index: 10; /* чтобы шапка была выше всего */
 }
 
 .header-content {
-  max-width: 900px; /* максимальная ширина шапки */
+  max-width: 900px; /* максимальная ширина содержимого */
   margin: 0 auto; /* центрируем */
   padding: 12px 20px; /* отступы внутри */
   display: flex; /* flex для расположения элементов */
   justify-content: space-between; /* расстояние между элементами */
   align-items: center; /* выравнивание по вертикали */
-  position: relative; /* для стрелок */
+  position: relative; /* для абсолютного позиционирования стрелок */
 }
 
 header h1 {
-  font-size: 22px; /* размер заголовка */
+  font-size: 22px; /* размер текста заголовка */
   color: #2d2d2d; /* цвет текста */
   margin: 0; /* убираем отступы */
   font-weight: 600; /* жирность текста */
@@ -45,11 +45,11 @@ header h1 {
   width: 24px; /* ширина иконки */
   height: 24px; /* высота иконки */
   vertical-align: middle; /* выравнивание с текстом */
-  margin-right: 8px; /* отступ справа */
+  margin-right: 8px; /* отступ справа от текста */
 }
 
 .header-center {
-  position: absolute; /* позиционирование стрелок */
+  position: absolute; /* абсолютное позиционирование стрелок */
   left: 50%; /* по центру */
   transform: translateX(-50%); /* точный центр */
   display: flex; /* flex для стрелок */
@@ -57,24 +57,24 @@ header h1 {
 }
 
 .arrow {
-  cursor: pointer; /* курсор */
-  font-size: 18px; /* размер */
-  user-select: none; /* нельзя выделять */
+  cursor: pointer; /* курсор при наведении */
+  font-size: 18px; /* размер стрелки */
+  user-select: none; /* нельзя выделять стрелку */
   -webkit-tap-highlight-color: transparent; /* убираем подсветку на мобилках */
 }
 
 nav button {
-  background: #fff; /* фон */
+  background: #fff; /* фон кнопки */
   border: 1px solid #ccc; /* рамка */
-  border-radius: 8px; /* скругление */
-  padding: 8px 14px; /* отступы */
+  border-radius: 8px; /* скругление углов */
+  padding: 8px 14px; /* внутренние отступы */
   font-size: 15px; /* размер текста */
   cursor: pointer; /* курсор */
   margin-left: 10px; /* отступ слева */
-  outline: none; /* убираем обводку */
-  box-shadow: none; /* тень */
-  transition: background 0.2s; /* плавность */
-  -webkit-tap-highlight-color: transparent; /* подсветка */
+  outline: none; /* убираем обводку при фокусе */
+  box-shadow: none; /* убираем тень */
+  transition: background 0.2s; /* плавная смена фона при наведении */
+  -webkit-tap-highlight-color: transparent; /* убираем подсветку на мобилках */
 }
 
 nav button:hover,
@@ -82,95 +82,94 @@ nav button:focus,
 nav button:active {
   background: #fff; /* фон не меняется */
   color: #222; /* цвет текста */
-  border-color: #ccc; /* рамка */
-  outline: none;
-  box-shadow: none;
+  border-color: #ccc; /* цвет рамки */
+  outline: none; /* убираем обводку */
+  box-shadow: none; /* убираем тень */
 }
 
 nav button:disabled {
-  opacity: 0.5; /* полупрозрачная */
+  opacity: 0.5; /* полупрозрачная кнопка */
   cursor: default; /* курсор обычный */
 }
 
 main {
   width: 100%; /* на всю ширину */
-  max-width: 900px; /* макс ширина */
+  max-width: 900px; /* максимальная ширина */
   text-align: center; /* текст по центру */
-  padding: 20px; /* отступы */
+  padding: 20px; /* внутренние отступы */
 }
 
 .grid {
-  display: grid; /* создаем сетку */
-  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* колонки под ширину плитки, растягиваются */
-  justify-content: center; /* центрируем сетку */
-  place-items: center; /* центрируем элементы */
-  gap: 15px; /* расстояние между плитками */
-  margin: 30px auto 0 auto; /* отступ сверху и по бокам центр */
-  width: 100%; /* сетка занимает всю ширину */
-  max-width: 900px; /* не шире текста */
+  display: grid; /* делаем сетку */
+  grid-template-columns: repeat(auto-fit, 100px); /* колонки по 100px, автоматическая подгонка */
+  justify-content: center; /* центрируем сетку по горизонтали */
+  place-items: center; /* центрируем элементы по горизонтали и вертикали */
+  gap: 15px; /* расстояние между элементами */
+  margin: 30px auto 0 auto; /* сверху отступ 30px, по бокам авто для центрирования */
+  max-width: 600px; /* максимальная ширина */
 }
 
 .grid div {
-  width: 100%; /* плитка растягивается на колонку */
-  max-width: 100px; /* максимум ширины плитки */
-  aspect-ratio: 1 / 1; /* квадрат */
+  width: 90px; /* ширина элемента */
+  height: 90px; /* высота элемента */
   background-color: #fff; /* фон */
   border: 1px solid #ddd; /* рамка */
-  border-radius: 12px; /* скругление */
-  display: flex; /* flex для текста */
-  justify-content: center; /* по горизонтали */
-  align-items: center; /* по вертикали */
+  border-radius: 12px; /* скругление углов */
+  display: flex; /* flex для текста внутри */
+  justify-content: center; /* центрируем текст по горизонтали */
+  align-items: center; /* центрируем текст по вертикали */
   cursor: pointer; /* курсор */
-  font-size: 14px; /* текст */
-  text-align: center; /* центр текста */
-  outline: none;
-  box-shadow: none;
-  -webkit-tap-highlight-color: transparent;
+  font-size: 14px; /* размер текста */
+  text-align: center; /* выравнивание текста */
+  outline: none; /* убираем обводку */
+  box-shadow: none; /* убираем тень */
+  -webkit-tap-highlight-color: transparent; /* убираем подсветку на мобилках */
 }
 
 .grid div:hover,
 .grid div:focus,
 .grid div:active {
-  background-color: #fff;
-  border-color: #ddd;
-  outline: none;
-  box-shadow: none;
+  background-color: #fff; /* фон не меняется */
+  border-color: #ddd; /* рамка не меняется */
+  outline: none; /* обводка нет */
+  box-shadow: none; /* тень нет */
 }
 
 .hidden {
-  display: none; /* скрываем */
+  display: none; /* скрываем элемент */
 }
 
 .text {
   margin-top: 30px; /* отступ сверху */
   font-size: 18px; /* размер текста */
   line-height: 1.6; /* высота строки */
-  text-align: left; /* слева */
+  text-align: left; /* выравнивание текста слева */
   background-color: #fff; /* фон */
-  border-radius: 12px; /* скругление */
-  padding: 20px; /* отступы */
+  border-radius: 12px; /* скругление углов */
+  padding: 20px; /* внутренние отступы */
   border: 1px solid #ddd; /* рамка */
-  -webkit-user-select: text;
-  user-select: text;
+  -webkit-user-select: text; /* текст можно выделять на мобилках */
+  user-select: text; /* текст можно выделять */
 }
 
 @media (max-width: 600px) {
   header h1 {
-    font-size: 18px; /* меньше заголовок */
+    font-size: 18px; /* уменьшаем заголовок на телефоне */
   }
   nav button {
-    padding: 6px 10px; /* меньше кнопки */
-    font-size: 13px; /* текст меньше */
+    padding: 6px 10px; /* уменьшаем кнопки */
+    font-size: 13px; /* уменьшаем текст */
   }
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* меньше колонки на мобиле */
-    gap: 10px; /* меньше расстояние */
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); /* сетка адаптируется к ширине экрана */
+    gap: 10px; /* расстояние между элементами меньше */
   }
   .grid div {
-    max-width: 80px; /* плитка меньше */
-    font-size: 13px; /* текст меньше */
+    width: 70px; /* уменьшаем элементы */
+    height: 70px; /* уменьшаем элементы */
+    font-size: 13px; /* уменьшаем текст */
   }
   .text {
-    font-size: 16px; /* текст меньше */
+    font-size: 16px; /* уменьшаем текст */
   }
 }
