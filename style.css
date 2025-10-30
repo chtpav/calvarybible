@@ -100,13 +100,13 @@ main {
 }
 
 .grid {
-  display: grid; /* делаем сетку */
-  grid-template-columns: repeat(auto-fit, 100px); /* колонки по 100px, автоматическая подгонка */
-  justify-content: center; /* центрируем сетку по горизонтали */
-  place-items: center; /* центрируем элементы по горизонтали и вертикали */
+  display: grid; /* создаем сетку */
+  grid-template-columns: repeat(auto-fit, 100px); /* колонки 100px и подгонка по ширине */
+  justify-content: center; /* центрируем сетку */
+  justify-items: center; /* центрируем элементы */
   gap: 15px; /* расстояние между элементами */
-  margin: 30px auto 0 auto; /* сверху отступ 30px, по бокам авто для центрирования */
-  max-width: 600px; /* максимальная ширина */
+  margin-top: 30px; /* отступ сверху */
+  max-width: 900px; /* максимальная ширина */
 }
 
 .grid div {
